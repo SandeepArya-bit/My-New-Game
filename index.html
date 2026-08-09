@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stone Paper Scissors Game</title>
+    <title>Sandeep's Birthday Wheel 🎉</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,117 +13,82 @@
         }
 
         body {
-            display: flex;
             background: #1a1a2e;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
-        }
-
-        /* Left Side Dashboard (Desktop Default) */
-        .dashboard {
-            width: 300px;
-            background: #161623;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-right: 2px solid #0f3460;
         }
 
-        .dashboard h2 {
-            margin-bottom: 20px;
+        h1 {
             color: #e94560;
-            font-size: 24px;
-        }
-
-        .score-card {
-            background: #0f3460;
-            width: 100%;
-            padding: 15px;
-            border-radius: 8px;
+            margin-bottom: 5px;
+            font-size: 26px;
             text-align: center;
-            margin-bottom: 15px;
-            font-size: 18px;
         }
 
-        .score-card span {
-            font-weight: bold;
-            font-size: 24px;
-            display: block;
-            margin-top: 5px;
+        p.subtitle {
             color: #4ecca3;
+            margin-bottom: 25px;
+            font-size: 15px;
+            text-align: center;
         }
 
-        /* Main Game Area */
-        .game-container {
-            flex: 1;
+        .wheel-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            width: 100%;
         }
 
-        .game-container h1 {
-            margin-bottom: 30px;
-            color: #4ecca3;
-            font-size: 32px;
-            text-align: center;
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid #ff0000;
+            z-index: 10;
         }
 
-        /* Choice Buttons */
-        .choices {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            justify-content: center;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-
-        .choice-btn {
-            background: #161623;
-            border: 2px solid #0f3460;
+        #wheelCanvas {
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
-            width: 90px;
-            height: 90px;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .spin-btn {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: #e94560;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
+            z-index: 5;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
-            cursor: pointer;
-            transition: 0.3s all ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .choice-btn:hover, .choice-btn:active {
-            transform: scale(1.1);
-            background: #0f3460;
-            border-color: #4ecca3;
+        .spin-btn:active {
+            transform: scale(0.95);
         }
 
-        /* Visual Battle Ground */
-        .battle-ground {
-            display: flex;
-            gap: 30px;
-            font-size: 18px;
-            text-align: center;
-            margin-top: 10px;
-            background: #161623;
-            padding: 15px 25px;
-            border-radius: 10px;
-            border: 1px solid #0f3460;
-            max-width: 100%;
-        }
-
-        .battle-hand {
-            font-size: 50px;
-            margin-top: 10px;
-        }
-
-        /* Popup Message Modal */
         .modal {
             display: none;
             position: fixed;
@@ -131,230 +96,246 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            z-index: 100;
             padding: 20px;
         }
 
         .modal-content {
             background: #161623;
-            padding: 30px 20px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             border: 2px solid #4ecca3;
-            box-shadow: 0 0 20px rgba(78, 204, 163, 0.3);
+            box-shadow: 0 0 25px rgba(78, 204, 163, 0.4);
         }
 
-        .modal-content h3 {
-            font-size: 28px;
-            margin-bottom: 15px;
+        .modal-content h2 {
+            color: #e94560;
+            font-size: 22px;
+            margin-bottom: 8px;
         }
 
-        .modal-content p {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #ccc;
-            line-height: 1.5;
-        }
-
-        .yt-btn {
-            display: inline-block;
-            background: #ff0000;
-            color: white;
-            text-decoration: none;
-            padding: 12px 20px;
+        .modal-content p.dare-text {
+            color: #fff;
+            font-size: 18px;
             font-weight: bold;
-            border-radius: 25px;
-            font-size: 15px;
-            transition: 0.3s;
             margin-bottom: 15px;
+            background: #0f3460;
+            padding: 10px;
+            border-radius: 8px;
         }
 
-        .yt-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        .timer-msg {
+            font-size: 14px;
+            color: #ff9f43;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        .restart-btn {
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .close-btn {
             background: #4ecca3;
             color: #1a1a2e;
             border: none;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .restart-btn:hover {
-            background: #3db892;
-        }
-
-        /* MOBILE RESPONSIVE MEDIA QUERIES */
-        @media screen and (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .dashboard {
-                width: 100%;
-                border-right: none;
-                border-bottom: 2px solid #0f3460;
-                padding: 15px;
-            }
-
-            .dashboard h2 {
-                margin-bottom: 10px;
-                font-size: 20px;
-            }
-
-            /* Show scorecards side-by-side on mobile */
-            .dashboard-scores {
-                display: flex;
-                gap: 10px;
-                width: 100%;
-            }
-
-            .score-card {
-                margin-bottom: 0;
-                padding: 10px 5px;
-                font-size: 14px;
-            }
-
-            .score-card span {
-                font-size: 20px;
-            }
-
-            .game-container h1 {
-                font-size: 26px;
-                margin-bottom: 25px;
-            }
-
-            .choice-btn {
-                width: 80px;
-                height: 80px;
-                font-size: 35px;
-            }
-
-            .battle-ground {
-                gap: 20px;
-                padding: 15px 20px;
-                font-size: 15px;
-            }
-
-            .battle-hand {
-                font-size: 40px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Left/Top Side Dashboard -->
-    <div class="dashboard">
-        <h2>Dashboard</h2>
-        <div class="dashboard-scores" style="display: flex; gap: 10px; width: 100%;">
-            <div class="score-card">
-                You
-                <span id="user-score">0</span>
-            </div>
-            <div class="score-card">
-                Computer
-                <span id="comp-score">0</span>
-            </div>
-            <div class="score-card">
-                Draws
-                <span id="draw-score">0</span>
-            </div>
-        </div>
+    <h1>🎂 Sandeep's Birthday Wheel 🎂</h1>
+    <p class="subtitle">Spin the wheel & complete the birthday task!</p>
+
+    <div class="wheel-container">
+        <div class="pointer"></div>
+        <canvas id="wheelCanvas" width="320" height="320"></canvas>
+        <button class="spin-btn" id="spinBtn">SPIN</button>
     </div>
 
-    <!-- Main Game Area -->
-    <div class="game-container">
-        <h1>Stone Paper Scissors</h1>
-        
-        <div class="choices">
-            <button class="choice-btn" onclick="playGame('stone')">✊</button>
-            <button class="choice-btn" onclick="playGame('paper')">✋</button>
-            <button class="choice-btn" onclick="playGame('scissors')">✌️</button>
-        </div>
-
-        <div class="battle-ground">
-            <div>
-                <div>You Chose</div>
-                <div class="battle-hand" id="user-choice-display">❓</div>
-            </div>
-            <div>
-                <div>Computer Chose</div>
-                <div class="battle-hand" id="comp-choice-display">❓</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- End Game Modal Popup -->
+    <!-- Video Popup Modal -->
     <div class="modal" id="resultModal">
         <div class="modal-content">
-            <h3 id="resultHeading">You Won!</h3>
-            <p>Now this is break time let's enjoy with this song 🎶</p>
-            <a href="https://youtu.be/_KNa7a5wPTs?si=_MW9K61b36oGLYFb" target="_blank" class="yt-btn">▶️ Watch Song on YouTube</a>
-            <button class="restart-btn" onclick="closeModal()">Next Round</button>
+            <h2>🎉 Your Birthday task! 🎉</h2>
+            <p class="dare-text" id="dareResult">Loading...</p>
+            
+            <p class="timer-msg" id="timerMsg">⏳ And This is for you 😊 ...</p>
+            
+            <div class="video-container">
+                <iframe id="ytVideo" src="" allow="autoplay" allowfullscreen></iframe>
+            </div>
+
+            <button class="close-btn" onclick="closeModal()">Spin Again 🔄</button>
         </div>
     </div>
 
     <script>
-        let userScore = 0;
-        let compScore = 0;
-        let drawScore = 0;
+        // Aapki di gayi saari Shorts videos attach kar di gayi hain:
+        const dares = [
+            { text: "Wish Me Happy Birthday 🥳", videoId: "ne6ieqLoLfQ" },
+            { text: "Send 1 Funny Pic with Me 😂", videoId: "fRUvwtdXa5U" },
+            { text: "Treat Sandeep with a Pizza 🍕", videoId: "IEzabge7hEA" },
+            { text: "Sing a Birthday Song for Me 🎤", videoId: "8Cyx_4mRBnc" },
+            { text: "Send a Voice Note Wishing Me 🎙️", videoId: "IsYrgg-AY48" },
+            { text: "Give Me a Secret Birthday Gift 🎁", videoId: "12PznPNWoWo" }
+        ];
 
-        const emojis = {
-            stone: "✊",
-            paper: "✋",
-            scissors: "✌️"
-        };
+        const colors = ["#e94560", "#0f3460", "#4ecca3", "#ff9f43", "#10ac84", "#5f27cd"];
 
-        function playGame(userChoice) {
-            const choices = ['stone', 'paper', 'scissors'];
-            const compChoice = choices[Math.floor(Math.random() * 3)];
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
 
-            document.getElementById('user-choice-display').innerText = emojis[userChoice];
-            document.getElementById('comp-choice-display').innerText = emojis[compChoice];
+        const numSlices = dares.length;
+        const sliceAngle = (2 * Math.PI) / numSlices;
+        let currentAngle = 0;
+        let isSpinning = false;
+        
+        let countdownTimer;
 
-            if (userChoice === compChoice) {
-                drawScore++;
-                document.getElementById('draw-score').innerText = drawScore;
-                showPopup("It's a Draw!");
-            } else if (
-                (userChoice === 'stone' && compChoice === 'scissors') ||
-                (userChoice === 'paper' && compChoice === 'stone') ||
-                (userChoice === 'scissors' && compChoice === 'paper')
-            ) {
-                userScore++;
-                document.getElementById('user-score').innerText = userScore;
-                showPopup("You Won!");
-            } else {
-                compScore++;
-                document.getElementById('comp-score').innerText = compScore;
-                showPopup("You Lost This Game!");
+        // Speech Synthesis Engine
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 1.2;
+                window.speechSynthesis.speak(utterance);
             }
         }
 
-        function showPopup(message) {
+        // Draw Wheel Function
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = canvas.width / 2;
+
+            for (let i = 0; i < numSlices; i++) {
+                const angle = currentAngle + i * sliceAngle;
+
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, angle, angle + sliceAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle + sliceAngle / 2);
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 11px sans-serif";
+                ctx.textAlign = "right";
+                ctx.fillText(dares[i].text.substring(0, 18) + "...", radius - 10, 4);
+                ctx.restore();
+            }
+        }
+
+        drawWheel();
+
+        // Spin Functionality
+        spinBtn.addEventListener("click", () => {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const spinAngle = Math.floor(Math.random() * 360) + 1800; 
+            const startAngle = currentAngle;
+            const startTime = performance.now();
+            const duration = 4000;
+
+            function animateWheel(time) {
+                const elapsed = time - startTime;
+                if (elapsed < duration) {
+                    const progress = elapsed / duration;
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+                    
+                    currentAngle = startAngle + (spinAngle * (Math.PI / 180)) * easeOut;
+                    drawWheel();
+                    requestAnimationFrame(animateWheel);
+                } else {
+                    currentAngle = startAngle + (spinAngle * (Math.PI / 180));
+                    drawWheel();
+                    isSpinning = false;
+
+                    const normalizedAngle = (2 * Math.PI - (currentAngle % (2 * Math.PI))) % (2 * Math.PI);
+                    const pointerOffset = (1.5 * Math.PI) % (2 * Math.PI); 
+                    const winningIndex = Math.floor(((normalizedAngle + pointerOffset) % (2 * Math.PI)) / sliceAngle);
+
+                    showModal(dares[winningIndex]);
+                }
+            }
+
+            requestAnimationFrame(animateWheel);
+        });
+
+        function showModal(winningTask) {
+            document.getElementById("dareResult").innerText = winningTask.text;
+            document.getElementById("ytVideo").src = "";
+            document.getElementById("resultModal").style.display = "flex";
+
+            clearInterval(countdownTimer);
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+            // Clean Emoji from speech text
+            const cleanTaskText = winningTask.text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+            speakText(`Your Birthday task is ${cleanTaskText}`);
+
+            let timeLeft = 10;
+            const timerMsg = document.getElementById("timerMsg");
+
             setTimeout(() => {
-                document.getElementById('resultHeading').innerText = message;
-                document.getElementById('resultModal').style.display = 'flex';
-            }, 600);
+                timerMsg.innerText = `⏳ And This is for you 😊 ${timeLeft} seconds...`;
+                speakText(timeLeft.toString());
+
+                countdownTimer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft > 0) {
+                        timerMsg.innerText = `⏳ And This is for you 😊 ${timeLeft} seconds...`;
+                        speakText(timeLeft.toString());
+                    } else {
+                        clearInterval(countdownTimer);
+                        timerMsg.innerText = "🍿 Enjoy the video now!";
+                        
+                        // YouTube Shorts Video URL Embed
+                        const iframe = document.getElementById("ytVideo");
+                        iframe.src = `https://www.youtube.com/embed/${winningTask.videoId}?autoplay=1`;
+                    }
+                }, 1000);
+            }, 1800);
         }
 
         function closeModal() {
-            document.getElementById('resultModal').style.display = 'none';
-            document.getElementById('user-choice-display').innerText = "❓";
-            document.getElementById('comp-choice-display').innerText = "❓";
+            clearInterval(countdownTimer);
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            document.getElementById("ytVideo").src = "";
+            document.getElementById("resultModal").style.display = "none";
         }
     </script>
 </body>

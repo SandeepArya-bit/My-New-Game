@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Paper Scissors Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background: #1a1a2e;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Left Side Dashboard */
+        .dashboard {
+            width: 300px;
+            background: #161623;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 2px solid #0f3460;
+        }
+
+        .dashboard h2 {
+            margin-bottom: 20px;
+            color: #e94560;
+            font-size: 24px;
+        }
+
+        .score-card {
+            background: #0f3460;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .score-card span {
+            font-weight: bold;
+            font-size: 24px;
+            display: block;
+            margin-top: 5px;
+            color: #4ecca3;
+        }
+
+        /* Main Game Area */
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container h1 {
+            margin-bottom: 40px;
+            color: #4ecca3;
+            font-size: 36px;
+        }
+
+        /* Choice Buttons */
+        .choices {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .choice-btn {
+            background: #161623;
+            border: 2px solid #0f3460;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            cursor: pointer;
+            transition: 0.3s all ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .choice-btn:hover {
+            transform: scale(1.1);
+            background: #0f3460;
+            border-color: #4ecca3;
+        }
+
+        /* Visual Battle Ground */
+        .battle-ground {
+            display: flex;
+            gap: 50px;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 20px;
+            background: #161623;
+            padding: 20px 40px;
+            border-radius: 10px;
+            border: 1px solid #0f3460;
+        }
+
+        .battle-hand {
+            font-size: 60px;
+            margin-top: 10px;
+        }
+
+        /* Popup Message Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-content {
+            background: #161623;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            border: 2px solid #4ecca3;
+            box-shadow: 0 0 20px rgba(78, 204, 163, 0.3);
+        }
+
+        .modal-content h3 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .yt-btn {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .yt-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .restart-btn {
+            background: #4ecca3;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .restart-btn:hover {
+            background: #3db892;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Side Dashboard -->
+    <div class="dashboard">
+        <h2>Dashboard</h2>
+        <div class="score-card">
+            You Score
+            <span id="user-score">0</span>
+        </div>
+        <div class="score-card">
+            Computer Score
+            <span id="comp-score">0</span>
+        </div>
+        <div class="score-card">
+            Draws
+            <span id="draw-score">0</span>
+        </div>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="game-container">
+        <h1>Stone Paper Scissors</h1>
+        
+        <div class="choices">
+            <button class="choice-btn" onclick="playGame('stone')">✊</button>
+            <button class="choice-btn" onclick="playGame('paper')">✋</button>
+            <button class="choice-btn" onclick="playGame('scissors')">✌️</button>
+        </div>
+
+        <div class="battle-ground">
+            <div>
+                <div>You Chose</div>
+                <div class="battle-hand" id="user-choice-display">❓</div>
+            </div>
+            <div>
+                <div>Computer Chose</div>
+                <div class="battle-hand" id="comp-choice-display">❓</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Game Modal Popup -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h3 id="resultHeading">You Won!</h3>
+            <p>Now this is break time let's enjoy with this song 🎶</p>
+            <!-- APNI YOUTUBE VIDEO YA CHANNEL KI LINK NICHE HREF ME DAALEIN -->
+            <a href="https://youtu.be/_KNa7a5wPTs?si=_MW9K61b36oGLYFb" target="_blank" class="yt-btn">▶️ Watch Song on YouTube</a>
+            <button class="restart-btn" onclick="closeModal()">Next Round</button>
+        </div>
+    </div>
+
+    <script>
+        let userScore = 0;
+        let compScore = 0;
+        let drawScore = 0;
+
+        const emojis = {
+            stone: "✊",
+            paper: "✋",
+            scissors: "✌️"
+        };
+
+        function playGame(userChoice) {
+            // 1. Computer Choice Generation
+            const choices = ['stone', 'paper', 'scissors'];
+            const compChoice = choices[Math.floor(Math.random() * 3)];
+
+            // 2. Display Choices on Screen
+            document.getElementById('user-choice-display').innerText = emojis[userChoice];
+            document.getElementById('comp-choice-display').innerText = emojis[compChoice];
+
+            // 3. Logic Matrix to Decide Winner
+            if (userChoice === compChoice) {
+                drawScore++;
+                document.getElementById('draw-score').innerText = drawScore;
+                showPopup("It's a Draw!");
+            } else if (
+                (userChoice === 'stone' && compChoice === 'scissors') ||
+                (userChoice === 'paper' && compChoice === 'stone') ||
+                (userChoice === 'scissors' && compChoice === 'paper')
+            ) {
+                userScore++;
+                document.getElementById('user-score').innerText = userScore;
+                showPopup("You Won!");
+            } else {
+                compScore++;
+                document.getElementById('comp-score').innerText = compScore;
+                showPopup("You Lost This Game!");
+            }
+        }
+
+        function showPopup(message) {
+            // Thoda sa delay diya hai taaki user dekh sake computer ne kya chose kiya
+            setTimeout(() => {
+                document.getElementById('resultHeading').innerText = message;
+                document.getElementById('resultModal').style.display = 'flex';
+            }, 600);
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+            document.getElementById('user-choice-display').innerText = "❓";
+            document.getElementById('comp-choice-display').innerText = "❓";
+        }
+    </script>
+</body>
+</html>

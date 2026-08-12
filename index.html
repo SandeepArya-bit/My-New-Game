@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #1a1a2e;
+            background: linear-gradient(135deg, #120129, #1a1a2e, #2b0938);
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -21,22 +21,66 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Continuous Animated Background Theme Elements (Flowers, Cakes, Gifts) */
+        .bg-animated-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .bg-item {
+            position: absolute;
+            bottom: -50px;
+            font-size: 30px;
+            opacity: 0.75;
+            animation: floatUp 8s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         h1 {
-            color: #e94560;
+            color: #ff4757;
             margin-bottom: 5px;
-            font-size: 26px;
+            font-size: 28px;
             text-align: center;
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.6);
+            z-index: 2;
         }
 
         p.subtitle {
-            color: #4ecca3;
+            color: #f3f3f6;
             margin-bottom: 25px;
-            font-size: 15px;
+            font-size: 16px;
             text-align: center;
+            font-weight: 600;
+            z-index: 2;
         }
 
+        /* Wheel Container */
         .wheel-container {
             position: relative;
             width: 320px;
@@ -44,6 +88,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 2;
         }
 
         .pointer {
@@ -55,29 +100,30 @@
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-top: 25px solid #ff0000;
+            border-top: 25px solid #ff4757;
             z-index: 10;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
         }
 
         #wheelCanvas {
             width: 320px;
             height: 320px;
             border-radius: 50%;
-            box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+            box-shadow: 0 0 30px rgba(233, 69, 96, 0.6), 0 0 10px rgba(46, 213, 115, 0.4);
         }
 
         .spin-btn {
             position: absolute;
             width: 70px;
             height: 70px;
-            background: #e94560;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
             border: 4px solid #fff;
             border-radius: 50%;
             color: #fff;
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.8);
             transition: 0.2s;
             z-index: 5;
             display: flex;
@@ -86,9 +132,10 @@
         }
 
         .spin-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
 
+        /* Video Popup Modal */
         .modal {
             display: none;
             position: fixed;
@@ -96,7 +143,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.92);
             justify-content: center;
             align-items: center;
             z-index: 100;
@@ -110,12 +157,12 @@
             text-align: center;
             width: 100%;
             max-width: 450px;
-            border: 2px solid #4ecca3;
-            box-shadow: 0 0 25px rgba(78, 204, 163, 0.4);
+            border: 2px solid #2ed573;
+            box-shadow: 0 0 30px rgba(46, 213, 115, 0.4);
         }
 
         .modal-content h2 {
-            color: #e94560;
+            color: #ff4757;
             font-size: 22px;
             margin-bottom: 8px;
         }
@@ -123,23 +170,25 @@
         .modal-content p.dare-text {
             color: #fff;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: normal;
             margin-bottom: 15px;
             background: #0f3460;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
+            border: 1px solid #1e5395;
+            line-height: 1.4;
         }
 
         .timer-msg {
-            font-size: 14px;
-            color: #ff9f43;
+            font-size: 15px;
+            color: #ffa502;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .video-container {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 100%; /* Optimized aspect ratio for YouTube Shorts */
             height: 0;
             overflow: hidden;
             border-radius: 10px;
@@ -157,21 +206,37 @@
         }
 
         .close-btn {
-            background: #4ecca3;
+            background: #2ed573;
             color: #1a1a2e;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 22px;
             font-size: 15px;
             font-weight: bold;
             border-radius: 20px;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #26af5f;
         }
     </style>
 </head>
 <body>
 
+    <!-- Animated Flowers & Cakes Theme Background -->
+    <div class="bg-animated-container">
+        <div class="bg-item" style="left: 5%; animation-duration: 7s; animation-delay: 0s;">🎂</div>
+        <div class="bg-item" style="left: 18%; animation-duration: 9s; animation-delay: 2s;">🌸</div>
+        <div class="bg-item" style="left: 32%; animation-duration: 6s; animation-delay: 1s;">🌹</div>
+        <div class="bg-item" style="left: 48%; animation-duration: 8s; animation-delay: 3s;">🎂</div>
+        <div class="bg-item" style="left: 62%; animation-duration: 10s; animation-delay: 0.5s;">🌺</div>
+        <div class="bg-item" style="left: 78%; animation-duration: 7s; animation-delay: 2.5s;">🍰</div>
+        <div class="bg-item" style="left: 90%; animation-duration: 9s; animation-delay: 1.5s;">🌻</div>
+    </div>
+
     <h1>🎂 Sandeep's Birthday Wheel 🎂</h1>
-    <p class="subtitle">Spin the wheel & complete the birthday task!</p>
+    <p class="subtitle"><B><i>Spin the wheel & complete the birthday task!👍</i></B></p>
 
     <div class="wheel-container">
         <div class="pointer"></div>
@@ -182,10 +247,10 @@
     <!-- Video Popup Modal -->
     <div class="modal" id="resultModal">
         <div class="modal-content">
-            <h2>🎉 Your Birthday task! 🎉</h2>
+            <h2>🎉 Your Birthday Task! 🎉</h2>
             <p class="dare-text" id="dareResult">Loading...</p>
             
-            <p class="timer-msg" id="timerMsg">⏳ And This is for you 😊 ...</p>
+            <p class="timer-msg" id="timerMsg">⏳ Get Ready...</p>
             
             <div class="video-container">
                 <iframe id="ytVideo" src="" allow="autoplay" allowfullscreen></iframe>
@@ -196,17 +261,16 @@
     </div>
 
     <script>
-        // Aapki di gayi saari Shorts videos attach kar di gayi hain:
         const dares = [
-            { text: "Wish Me Happy Birthday 🥳", videoId: "ne6ieqLoLfQ" },
-            { text: "Send 1 Funny Pic with Me 😂", videoId: "fRUvwtdXa5U" },
-            { text: "Treat Sandeep with a Pizza 🍕", videoId: "IEzabge7hEA" },
-            { text: "Sing a Birthday Song for Me 🎤", videoId: "8Cyx_4mRBnc" },
-            { text: "Send a Voice Note Wishing Me 🎙️", videoId: "IsYrgg-AY48" },
-            { text: "Give Me a Secret Birthday Gift 🎁", videoId: "12PznPNWoWo" }
+            { text: "Wish Sandeep,<br><b>Happy Birthday</b> 🥳", videoId: "oTY84sjtoOs" },
+            { text: "Send 1 Funny Pic <br> with <b>Sandeep</b> 😂", videoId: "fRUvwtdXa5U" },
+            { text: "Treat Sandeep with a Pizza 🍕", videoId: "ne6ieqLoLfQ" },
+            { text: "Sing a Birthday Song for Sandeep 🎤", videoId: "8Cyx_4mRBnc" },
+            { text: "Send a Voice Note Wishing Sandeep 🎙️", videoId: "EROeN_I_oG8" },
+            { text: "Give Sandeep a Secret Birthday Gift 🎁", videoId: "12PznPNWoWo" }
         ];
 
-        const colors = ["#e94560", "#0f3460", "#4ecca3", "#ff9f43", "#10ac84", "#5f27cd"];
+        const colors = ["#ff4757", "#0f3460", "#2ed573", "#ffa502", "#1e90ff", "#9b59b6"];
 
         const canvas = document.getElementById("wheelCanvas");
         const ctx = canvas.getContext("2d");
@@ -217,17 +281,26 @@
         let currentAngle = 0;
         let isSpinning = false;
         
-        let countdownTimer;
+        let selectedFemaleVoice = null;
+        let isModalActive = false;
 
-        // Speech Synthesis Engine
-        function speakText(text) {
+        // Female Voice Detection & Setup
+        function initVoices() {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 1.2;
-                window.speechSynthesis.speak(utterance);
+                const voices = window.speechSynthesis.getVoices();
+                selectedFemaleVoice = voices.find(v => 
+                    (v.lang.includes('en') || v.lang.includes('hi')) && 
+                    (v.name.toLowerCase().includes('female') || 
+                     v.name.toLowerCase().includes('zira') || 
+                     v.name.toLowerCase().includes('samantha') || 
+                     v.name.toLowerCase().includes('google uk english female'))
+                ) || null;
             }
+        }
+
+        if ('speechSynthesis' in window) {
+            initVoices();
+            window.speechSynthesis.onvoiceschanged = initVoices;
         }
 
         // Draw Wheel Function
@@ -253,7 +326,10 @@
                 ctx.fillStyle = "#fff";
                 ctx.font = "bold 11px sans-serif";
                 ctx.textAlign = "right";
-                ctx.fillText(dares[i].text.substring(0, 18) + "...", radius - 10, 4);
+                
+                // Wheel label display text cleanup
+                const cleanWheelLabel = dares[i].text.replace(/<[^>]*>/g, '').replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+                ctx.fillText(cleanWheelLabel.substring(0, 18) + "...", radius - 10, 4);
                 ctx.restore();
             }
         }
@@ -295,44 +371,84 @@
             requestAnimationFrame(animateWheel);
         });
 
-        function showModal(winningTask) {
-            document.getElementById("dareResult").innerText = winningTask.text;
+        // Speech Helper: Announcement Speed = 1.15x
+        function speakPhrase(text) {
+            return new Promise((resolve) => {
+                if (!isModalActive) return resolve();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 1.15;
+                utterance.volume = 1.0;
+                utterance.pitch = 1.15;
+                if (selectedFemaleVoice) utterance.voice = selectedFemaleVoice;
+
+                utterance.onend = () => resolve();
+                utterance.onerror = () => resolve();
+                
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        // Timer Speech Helper: Speed = 2.0x (Chrome Browser Maximum Limit)
+        function speakNumberEventSynced(numText) {
+            return new Promise((resolve) => {
+                if (!isModalActive) return resolve();
+
+                const utterance = new SpeechSynthesisUtterance(numText);
+                utterance.lang = 'en-US';
+                utterance.rate = 2.0; // Max allowed browser speed
+                utterance.volume = 1.0;
+                utterance.pitch = 1.15;
+                if (selectedFemaleVoice) utterance.voice = selectedFemaleVoice;
+
+                utterance.onstart = () => {
+                    const timerMsg = document.getElementById("timerMsg");
+                    timerMsg.innerText = `⏳ And This is for you 😊 ${numText} seconds...`;
+                };
+
+                utterance.onend = () => resolve();
+                utterance.onerror = () => resolve();
+
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        async function showModal(winningTask) {
+            isModalActive = true;
+            document.getElementById("dareResult").innerHTML = winningTask.text;
             document.getElementById("ytVideo").src = "";
             document.getElementById("resultModal").style.display = "flex";
 
-            clearInterval(countdownTimer);
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-            // Clean Emoji from speech text
-            const cleanTaskText = winningTask.text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
-            speakText(`Your Birthday task is ${cleanTaskText}`);
-
-            let timeLeft = 10;
+            // Stripping HTML tags & emojis for voice pronunciation
+            const cleanTaskText = winningTask.text.replace(/<[^>]*>/g, '').replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
             const timerMsg = document.getElementById("timerMsg");
+            timerMsg.innerText = "🗣️ Listening Task...";
 
-            setTimeout(() => {
-                timerMsg.innerText = `⏳ And This is for you 😊 ${timeLeft} seconds...`;
-                speakText(timeLeft.toString());
+            // 1. Task Announcement
+            await speakPhrase(`Your Birthday task is, ${cleanTaskText}`);
+            
+            // 2. Transition Phrase
+            await speakPhrase("And this song for you, let's start");
 
-                countdownTimer = setInterval(() => {
-                    timeLeft--;
-                    if (timeLeft > 0) {
-                        timerMsg.innerText = `⏳ And This is for you 😊 ${timeLeft} seconds...`;
-                        speakText(timeLeft.toString());
-                    } else {
-                        clearInterval(countdownTimer);
-                        timerMsg.innerText = "🍿 Enjoy the video now!";
-                        
-                        // YouTube Shorts Video URL Embed
-                        const iframe = document.getElementById("ytVideo");
-                        iframe.src = `https://www.youtube.com/embed/${winningTask.videoId}?autoplay=1`;
-                    }
-                }, 1000);
-            }, 1800);
+            // 3. Fast Synced Timer Countdown (10 to 1)
+            for (let num = 3; num >= 1; num--) {
+                if (!isModalActive) break;
+                await speakNumberEventSynced(num.toString());
+            }
+
+            // 4. Video Auto Play
+            if (isModalActive) {
+                timerMsg.innerText = "🍿 Enjoy the video now!";
+                const iframe = document.getElementById("ytVideo");
+                iframe.src = `https://www.youtube.com/embed/${winningTask.videoId}?autoplay=1`;
+            }
         }
 
         function closeModal() {
-            clearInterval(countdownTimer);
+            isModalActive = false;
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             document.getElementById("ytVideo").src = "";
             document.getElementById("resultModal").style.display = "none";

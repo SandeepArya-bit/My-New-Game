@@ -11,7 +11,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Wish & Tasks 🎉</title>
-    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * {
@@ -22,7 +21,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #120129, #1a1a2e, #2b0938);
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0369a1) !important;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -35,10 +34,6 @@
             user-select: none;
             -webkit-user-select: none;
             transition: background 0.5s ease;
-        }
-
-        body.theme-nisha {
-            background: linear-gradient(135deg, #0f172a, #1e293b, #0369a1) !important;
         }
 
         .bg-animated-container {
@@ -67,7 +62,6 @@
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* MONTH TABS BAR */
         .month-tabs-container {
             display: flex;
             gap: 8px;
@@ -94,20 +88,13 @@
         }
 
         .month-tab.active {
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
             color: #fff;
-            border-color: #ff4757;
-            box-shadow: 0 0 12px rgba(255, 71, 87, 0.6);
+            border-color: #06b6d4;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
             transform: scale(1.05);
         }
 
-        body.theme-nisha .month-tab.active {
-            background: linear-gradient(135deg, #06b6d4, #22d3ee);
-            border-color: #06b6d4;
-            box-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
-        }
-
-        /* FRIEND SELECTOR */
         .friend-selector {
             display: flex;
             gap: 10px;
@@ -129,30 +116,19 @@
         }
 
         .friend-btn.active {
-            background: #2ed573;
-            color: #1a1a2e;
-            border-color: #2ed573;
-            font-weight: bold;
-        }
-
-        body.theme-nisha .friend-btn.active {
             background: #38bdf8;
             color: #0f172a;
             border-color: #38bdf8;
+            font-weight: bold;
         }
 
         h1 {
-            color: #ff4757;
+            color: #38bdf8;
             margin-bottom: 5px;
             font-size: 24px;
             text-align: center;
-            text-shadow: 0 0 10px rgba(255, 71, 87, 0.6);
-            z-index: 2;
-        }
-
-        body.theme-nisha h1 {
-            color: #38bdf8;
             text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+            z-index: 2;
         }
 
         p.subtitle {
@@ -164,59 +140,8 @@
             z-index: 2;
         }
 
-        /* SANDEEP'S WHEEL GAME */
-        .wheel-container {
-            position: relative;
-            width: 320px;
-            height: 320px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-        }
-
-        .pointer {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 25px solid #ff4757;
-            z-index: 10;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
-        }
-
-        #wheelCanvas {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            box-shadow: 0 0 30px rgba(233, 69, 96, 0.6);
-        }
-
-        .spin-btn {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            border: 4px solid #fff;
-            border-radius: 50%;
-            color: #fff;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.8);
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* NISHA'S SLIDING QUIZ CONTAINER */
         .quiz-slider-container {
-            display: none;
+            display: block;
             width: 100%;
             max-width: 380px;
             background: rgba(30, 41, 59, 0.85);
@@ -294,7 +219,6 @@
 
         .btn-next:hover { transform: scale(1.03); }
 
-        /* MODAL POPUP */
         .modal {
             display: none;
             position: fixed;
@@ -310,28 +234,20 @@
         }
 
         .modal-content {
-            background: #161623;
+            background: #0f172a;
             padding: 22px;
             border-radius: 18px;
             text-align: center;
             width: 100%;
             max-width: 420px;
-            border: 2px solid #2ed573;
-            box-shadow: 0 0 30px rgba(46, 213, 115, 0.4);
+            border: 2px solid #38bdf8;
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
             transform: scale(0.8);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
         }
 
         .modal.show .modal-content { transform: scale(1); }
-
-        body.theme-nisha .modal-content {
-            background: #0f172a;
-            border-color: #38bdf8;
-            box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
-        }
-
-        .modal-content h2 { color: #ff4757; font-size: 22px; margin-bottom: 12px; }
-        body.theme-nisha .modal-content h2 { color: #38bdf8; }
+        .modal-content h2 { color: #38bdf8; font-size: 22px; margin-bottom: 12px; }
 
         .score-badge-container {
             display: flex;
@@ -364,29 +280,12 @@
 
         .modal-content p.dare-text {
             color: #fff; font-size: 14px; font-weight: normal; margin-bottom: 15px;
-            background: #0f3460; padding: 14px; border-radius: 12px; border: 1px solid #1e5395; line-height: 1.5; text-align: left;
+            background: #1e293b; padding: 14px; border-radius: 12px; border: 1px solid #0284c7; line-height: 1.5; text-align: left;
         }
 
-        body.theme-nisha .modal-content p.dare-text {
-            background: #1e293b;
-            border-color: #0284c7;
-        }
-
-        .timer-msg { font-size: 15px; color: #ffa502; font-weight: bold; margin-bottom: 10px; }
-        .video-container {
-            position: relative; padding-bottom: 100%; height: 0; overflow: hidden;
-            border-radius: 10px; margin-bottom: 15px; background: #000; display: none;
-        }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
         .close-btn {
-            background: #2ed573; color: #1a1a2e; border: none; padding: 10px 24px;
+            background: #38bdf8; color: #0f172a; border: none; padding: 10px 24px;
             font-size: 15px; font-weight: bold; border-radius: 20px; cursor: pointer; transition: 0.2s;
-        }
-
-        body.theme-nisha .close-btn {
-            background: #38bdf8;
-            color: #0f172a;
         }
 
         .answer-match-list { margin-top: 8px; font-size: 13px; }
@@ -394,7 +293,7 @@
         .wrong-item { color: #ff4757; margin-bottom: 4px; }
     </style>
 </head>
-<body class="theme-nisha">
+<body>
 
     <div class="bg-animated-container">
         <div class="bg-item" style="left: 5%; animation-duration: 7s;">🎂</div>
@@ -404,24 +303,13 @@
         <div class="bg-item" style="left: 80%; animation-duration: 10s;">🍰</div>
     </div>
 
-    <!-- MONTH TABS -->
     <div class="month-tabs-container" id="monthTabsContainer"></div>
-
-    <!-- FRIEND SELECTOR -->
     <div class="friend-selector" id="friendSelectorContainer"></div>
 
     <h1 id="friendTitle">🎂 Nisha's Birthday Quiz 🧠 🎂</h1>
     <p class="subtitle" id="subtitleText"><b><i>Answer questions to match with Nisha's preferences!✍️</i></b></p>
 
-    <!-- SANDEEP'S GAME: WHEEL -->
-    <div class="wheel-container" id="wheelGameContainer" style="display: none;">
-        <div class="pointer"></div>
-        <canvas id="wheelCanvas" width="320" height="320"></canvas>
-        <button class="spin-btn" id="spinBtn">SPIN</button>
-    </div>
-
-    <!-- NISHA'S GAME: SLIDING QUIZ -->
-    <div class="quiz-slider-container" id="nishaQuizContainer" style="display: block;">
+    <div class="quiz-slider-container" id="nishaQuizContainer">
         <div class="slides-wrapper" id="slidesWrapper">
             
             <div class="slide">
@@ -462,23 +350,14 @@
         </div>
     </div>
 
-    <!-- RESULT MODAL -->
     <div class="modal" id="resultModal">
         <div class="modal-content">
             <h2 id="modalTitle">🎉 Birthday Quiz Result 🎉</h2>
-            
             <div id="scoreBox" class="score-badge-container" style="display: none;">
                 <div class="score-smiley" id="scoreSmiley">🥳</div>
                 <div class="score-badge" id="scoreBadge">0 of 5 Correct</div>
             </div>
-
             <p class="dare-text" id="dareResult">Loading...</p>
-            <p class="timer-msg" id="timerMsg" style="display: none;">⏳ Get Ready...</p>
-            
-            <div class="video-container" id="videoBox">
-                <iframe id="ytVideo" src="" allow="autoplay" allowfullscreen></iframe>
-            </div>
-            
             <button class="close-btn" onclick="closeModal()">Close ✕</button>
         </div>
     </div>
@@ -504,23 +383,7 @@
 
         const birthdayData = {
             0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [],
-            7: [ // August
-                /*
-                {
-                    name: "Sandeep",
-                    hasWheel: true,
-                    hasYoutube: true,
-                    title: "Sandeep's Birthday Wheel 🎉",
-                    dares: [
-                        { text: "Wish Sandeep,<br><b>Happy Birthday</b> 🥳", videoId: "oTY84sjtoOs" },
-                        { text: "Send 1 Funny Pic <br> with <b>Sandeep</b> 😂", videoId: "fRUvwtdXa5U" },
-                        { text: "Treat Sandeep with a Pizza 🍕", videoId: "ne6ieqLoLfQ" },
-                        { text: "Sing a Birthday Song for Sandeep 🎤", videoId: "8Cyx_4mRBnc" },
-                        { text: "Send a Voice Note Wishing Sandeep 🎙️", videoId: "EROeN_I_oG8" },
-                        { text: "Give Sandeep a Secret Birthday Gift 🎁", videoId: "12PznPNWoWo" }
-                    ]
-                },
-                */
+            7: [
                 {
                     name: "Nisha",
                     hasWheel: false,
@@ -532,21 +395,11 @@
         };
 
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const colors = ["#ff4757", "#0f3460", "#2ed573", "#ffa502", "#1e90ff", "#9b59b6"];
 
         let selectedMonthIndex = 7;
-        let currentFriendIndex = 0; // Set to 0 since Nisha is now the only friend
-        let activeDares = [];
+        let currentFriendIndex = 0;
         let currentFriendObj = null;
         let currentSlide = 0;
-
-        const canvas = document.getElementById("wheelCanvas");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spinBtn");
-        let currentAngle = 0;
-        let isSpinning = false;
-        let selectedFemaleVoice = null;
-        let isModalActive = false;
 
         window.onload = function() {
             renderMonthTabs();
@@ -575,23 +428,16 @@
         function loadFriendData() {
             const friendsInMonth = birthdayData[selectedMonthIndex] || [];
             const friendSelectorContainer = document.getElementById("friendSelectorContainer");
-            const wheelContainer = document.getElementById("wheelGameContainer");
             const quizContainer = document.getElementById("nishaQuizContainer");
             const subtitleText = document.getElementById("subtitleText");
 
             friendSelectorContainer.innerHTML = "";
 
             if (friendsInMonth.length === 0) {
-                document.body.classList.remove("theme-nisha");
                 document.getElementById("friendTitle").innerText = `🎈 No Birthdays in ${monthNames[selectedMonthIndex]} 🎈`;
                 subtitleText.innerHTML = "<b><i>Select another month!👍</i></b>";
-                wheelContainer.style.display = "none";
                 quizContainer.style.display = "none";
                 return;
-            }
-
-            if (currentFriendIndex >= friendsInMonth.length) {
-                currentFriendIndex = 0;
             }
 
             friendsInMonth.forEach((friend, idx) => {
@@ -607,21 +453,9 @@
 
             currentFriendObj = friendsInMonth[currentFriendIndex];
             document.getElementById("friendTitle").innerText = `🎂 ${currentFriendObj.title} 🎂`;
-
-            if (!currentFriendObj.hasWheel) {
-                document.body.classList.add("theme-nisha");
-                subtitleText.innerHTML = "<b><i>Answer questions to match with Nisha's preferences!✍️</i></b>";
-                wheelContainer.style.display = "none";
-                quizContainer.style.display = "block";
-                resetQuiz();
-            } else {
-                document.body.classList.remove("theme-nisha");
-                subtitleText.innerHTML = "<b><i>Spin the wheel & complete the birthday task!👍</i></b>";
-                wheelContainer.style.display = "flex";
-                quizContainer.style.display = "none";
-                activeDares = currentFriendObj.dares;
-                drawWheel();
-            }
+            subtitleText.innerHTML = "<b><i>Answer questions to match with Nisha's preferences!✍️</i></b>";
+            quizContainer.style.display = "block";
+            resetQuiz();
         }
 
         function resetQuiz() {
@@ -664,7 +498,6 @@
             let score = 0;
             let total = 5;
             let resultHtml = `<div class="answer-match-list">`;
-
             const questionTitles = ["Food", "Color", "Destination", "Song", "Serial"];
             
             for (let i = 1; i <= 5; i++) {
@@ -685,17 +518,11 @@
             resultHtml += `</div><br><b>Nisha's Task:</b> Send screenshot of your score to Nisha! 🎁`;
 
             let smiley = "🥳";
-            if (score === 5) {
-                smiley = "🥳🔥 Bestie Alert!";
-            } else if (score === 4) {
-                smiley = "😎🎉 So Close!";
-            } else if (score === 3) {
-                smiley = "🙂👍 Good Try!";
-            } else if (score === 1 || score === 2) {
-                smiley = "😅🙈 Need Improvement!";
-            } else {
-                smiley = "🤡💔 Stranger Alert!";
-            }
+            if (score === 5) smiley = "🥳🔥 Bestie Alert!";
+            else if (score === 4) smiley = "😎🎉 So Close!";
+            else if (score === 3) smiley = "🙂👍 Good Try!";
+            else if (score === 1 || score === 2) smiley = "😅🙈 Need Improvement!";
+            else smiley = "🤡💔 Stranger Alert!";
 
             showModal({ 
                 text: resultHtml, 
@@ -705,116 +532,7 @@
             });
         }
 
-        function drawWheel() {
-            if(!currentFriendObj || !currentFriendObj.hasWheel) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const numSlices = activeDares.length;
-            const sliceAngle = (2 * Math.PI) / numSlices;
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = canvas.width / 2;
-
-            for (let i = 0; i < numSlices; i++) {
-                const angle = currentAngle + i * sliceAngle;
-                ctx.beginPath();
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, angle, angle + sliceAngle);
-                ctx.lineTo(centerX, centerY);
-                ctx.fill();
-
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                ctx.rotate(angle + sliceAngle / 2);
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 11px sans-serif";
-                ctx.textAlign = "right";
-                
-                const cleanWheelLabel = activeDares[i].text.replace(/<[^>]*>/g, '').replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
-                ctx.fillText(cleanWheelLabel.substring(0, 18) + "...", radius - 10, 4);
-                ctx.restore();
-            }
-        }
-
-        spinBtn.addEventListener("click", () => {
-            if (isSpinning || activeDares.length <= 1) return;
-            isSpinning = true;
-
-            const spinAngle = Math.floor(Math.random() * 360) + 1800; 
-            const startAngle = currentAngle;
-            const startTime = performance.now();
-            const duration = 4000;
-
-            function animateWheel(time) {
-                const elapsed = time - startTime;
-                if (elapsed < duration) {
-                    const progress = elapsed / duration;
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    currentAngle = startAngle + (spinAngle * (Math.PI / 180)) * easeOut;
-                    drawWheel();
-                    requestAnimationFrame(animateWheel);
-                } else {
-                    currentAngle = startAngle + (spinAngle * (Math.PI / 180));
-                    drawWheel();
-                    isSpinning = false;
-
-                    const numSlices = activeDares.length;
-                    const sliceAngle = (2 * Math.PI) / numSlices;
-                    const normalizedAngle = (2 * Math.PI - (currentAngle % (2 * Math.PI))) % (2 * Math.PI);
-                    const pointerOffset = (1.5 * Math.PI) % (2 * Math.PI); 
-                    const winningIndex = Math.floor(((normalizedAngle + pointerOffset) % (2 * Math.PI)) / sliceAngle);
-
-                    showModal(activeDares[winningIndex]);
-                }
-            }
-            requestAnimationFrame(animateWheel);
-        });
-
-        function initVoices() {
-            if ('speechSynthesis' in window) {
-                const voices = window.speechSynthesis.getVoices();
-                selectedFemaleVoice = voices.find(v => 
-                    (v.lang.includes('en') || v.lang.includes('hi')) && 
-                    (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('zira'))
-                ) || null;
-            }
-        }
-        if ('speechSynthesis' in window) {
-            initVoices();
-            window.speechSynthesis.onvoiceschanged = initVoices;
-        }
-
-        function speakPhrase(text) {
-            return new Promise((resolve) => {
-                if (!isModalActive) return resolve();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 1.15;
-                if (selectedFemaleVoice) utterance.voice = selectedFemaleVoice;
-                utterance.onend = () => resolve();
-                utterance.onerror = () => resolve();
-                window.speechSynthesis.speak(utterance);
-            });
-        }
-
-        function speakNumberEventSynced(numText) {
-            return new Promise((resolve) => {
-                if (!isModalActive) return resolve();
-                const utterance = new SpeechSynthesisUtterance(numText);
-                utterance.lang = 'en-US';
-                utterance.rate = 2.0;
-                if (selectedFemaleVoice) utterance.voice = selectedFemaleVoice;
-                utterance.onstart = () => {
-                    document.getElementById("timerMsg").innerText = `⏳ And This is for you 😊 ${numText} seconds...`;
-                };
-                utterance.onend = () => resolve();
-                utterance.onerror = () => resolve();
-                window.speechSynthesis.speak(utterance);
-            });
-        }
-
-        async function showModal(winningTask) {
-            isModalActive = true;
+        function showModal(winningTask) {
             document.getElementById("dareResult").innerHTML = winningTask.text;
             const modal = document.getElementById("resultModal");
             const scoreBox = document.getElementById("scoreBox");
@@ -825,52 +543,15 @@
                 scoreBox.style.display = "flex";
                 scoreSmiley.innerText = winningTask.smiley;
                 scoreBadge.innerText = `${winningTask.score} of ${winningTask.total} Correct`;
-            } else {
-                scoreBox.style.display = "none";
             }
 
             modal.style.display = "flex";
             setTimeout(() => modal.classList.add("show"), 10);
-
-            const videoBox = document.getElementById("videoBox");
-            const timerMsg = document.getElementById("timerMsg");
-
-            if (currentFriendObj && currentFriendObj.hasYoutube) {
-                videoBox.style.display = "block";
-                timerMsg.style.display = "block";
-                document.getElementById("ytVideo").src = "";
-
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
-                const cleanTaskText = winningTask.text.replace(/<[^>]*>/g, '').replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
-                timerMsg.innerText = "🗣️ Listening Task...";
-
-                await speakPhrase(`Your Birthday task is, ${cleanTaskText}`);
-                await speakPhrase("And this song for you, let's start");
-
-                for (let num = 3; num >= 1; num--) {
-                    if (!isModalActive) break;
-                    await speakNumberEventSynced(num.toString());
-                }
-
-                if (isModalActive && winningTask.videoId) {
-                    timerMsg.innerText = "🍿 Enjoy the video now!";
-                    document.getElementById("ytVideo").src = `https://www.youtube.com/embed/${winningTask.videoId}?autoplay=1`;
-                }
-            } 
-            else {
-                videoBox.style.display = "none";
-                timerMsg.style.display = "none";
-                document.getElementById("ytVideo").src = "";
-            }
         }
 
         function closeModal() {
-            isModalActive = false;
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             document.getElementById("resultModal").classList.remove("show");
             document.getElementById("resultModal").style.display = "none";
-            document.getElementById("ytVideo").src = "";
             resetQuiz();
         }
     </script>
